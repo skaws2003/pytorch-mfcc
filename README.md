@@ -48,5 +48,12 @@ sox english.au -e signed-integer english.wav
 ```
 
 
+## Future works
+* Make the functions support batch
+* Implement other features of python_speech_features
+* distribute over pypi
+* sphinx documentation
+
+
 ## Comments
 Any contribution is welcomed. Please don't hesitate to make a pull request.
