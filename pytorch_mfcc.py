@@ -132,7 +132,7 @@ class MFCC(torch.nn.Module):
 
         padlen = int((numframes - 1) * frame_step + frame_len)
 
-        zeros = torch.zeros((padlen-slen))
+        zeros = torch.zeros((padlen-slen)).to(self.torch_device)
 
         padsignal = torch.cat((signal,zeros))
         
@@ -194,7 +194,7 @@ class MFCC(torch.nn.Module):
                 fbank[j,i] = (i - bin[j]) / (bin[j+1]-bin[j])
             for i in range(int(bin[j+1]), int(bin[j+2])):
                 fbank[j,i] = (bin[j+2]-i) / (bin[j+2]-bin[j+1])
-        rtn = torch.tensor(fbank.T,dtype=self.tensor_type)
+        rtn = torch.tensor(fbank.T,dtype=self.tensor_type,device=self.torch_device)
         return rtn
 
 
@@ -208,8 +208,8 @@ class MFCC(torch.nn.Module):
         """
         if self.ceplifter > 0:
             nframes,ncoeff = cepstra.shape
-            n = torch.arange(ncoeff).to(self.torch_device).type(self.tensor_type)
-            lift = 1 + (self.ceplifter/2.)*numpy.sin(numpy.pi*n/self.ceplifter)
+            n = torch.arange(ncoeff).type(self.tensor_type).to(self.torch_device)
+            lift = 1 + (self.ceplifter/2.)*torch.sin(numpy.pi*n/self.ceplifter)
             return lift*cepstra
         else:
             # values of L <= 0, do nothing
