@@ -67,16 +67,34 @@ class MFCC(torch.nn.Module):
         return nfft
 
     
-    def forward(self,signal):
-        self.tensor_type = signal.dtype
-        self.torch_device = signal.device
+    def forward(self,signals,lengths):
+        """
+        Calculates MFCC.
 
-        feat,energy = self.fbank(signal)
-        feat = torch.log(feat)
-        feat = dct(feat,norm='ortho')[:,:self.numcep]
-        feat = self.lifter(feat)
-        if self.appendEnergy: feat[:,0] = torch.log(energy) # replace first cepstral coefficient with log of frame energy
-        return feat
+        :param signals: (torch.Tensor) batch of signals padded by 0.
+        :param lengths: (list) length of each elements in batch.
+        """
+        self.tensor_type = signals.dtype
+        self.torch_device = signals.device
+        outs = []
+        for i,signal in enumerate(signals):
+            feat,energy = self.fbank(signal[:lengths[i]])
+            feat = torch.log(feat)
+            feat = dct(feat,norm='ortho')[:,:self.numcep]
+            feat = self.lifter(feat)
+            if self.appendEnergy:
+                feat[:,0] = torch.log(energy) # replace first cepstral coefficient with log of frame energy
+            outs.append(feat)
+        
+        # Pad each element of outs list
+        max_len = max(outs,key=lambda x: x.shape[0]).shape[0]
+        mfcc_lengths = []
+        for i in range(len(outs)):
+            mfcc_lengths.append(len(outs[i]))
+            zeros = torch.zeros((max_len-outs[i].shape[0],outs[i].shape[1]),dtype=self.tensor_type).to(self.torch_device)
+            outs[i] = torch.cat([outs[i],zeros],dim=0)
+        outs = torch.stack(outs)
+        return outs,mfcc_lengths
 
 
     def fbank(self,signal):

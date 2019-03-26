@@ -2,7 +2,6 @@
 
 Based on [this repository](https://github.com/jameslyons/python_speech_features), this project extends the MFCC function for Pytorch so that backpropagation path could be established through.
 
-This implementation is alpha. Batch support is not yet implemented, but will be soon.
 
 ## Dependency
 * tested on PyTorch 1.0 (but probably works with >= 0.4)
@@ -14,24 +13,6 @@ This implementation is alpha. Batch support is not yet implemented, but will be 
 ```
 pip install torch-dct
 git clone https://github.com/skaws2003/pytorch_mfcc.git
-```
-
-
-## Usage
-```python
-import scipy.io.wavefile as wav
-import torch
-import pytorch_mfcc
-
-(rate,sig) = wav.read("english.wav")
-signal = torch.tensor(sig)
-
-mfcc = pytorch_mfcc.MFCC(samplerate=rate)
-val = mfcc(signal)
-
-print(val.shape)
-
->>> torch.Size([426,13])
 ```
 
 
@@ -49,7 +30,7 @@ sox english.au -e signed-integer english.wav
 
 
 ## Future works
-* Make the functions support batch
+* Optimize with batch working
 * Implement other features of python_speech_features
 * distribute over pypi
 * sphinx documentation
