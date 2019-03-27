@@ -4,7 +4,7 @@ Based on [this repository](https://github.com/jameslyons/python_speech_features)
 
 
 ## Dependency
-* tested on PyTorch 1.0 (but probably works with >= 0.4)
+* PyTorch >= 1.0
 * numpy
 
 
