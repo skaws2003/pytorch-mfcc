@@ -5,19 +5,17 @@ Based on [this repository](https://github.com/jameslyons/python_speech_features)
 
 ## Dependency
 * tested on PyTorch 1.0 (but probably works with >= 0.4)
-* [torch-dct](https://github.com/zh217/torch-dct)
 * numpy
 
 
 ## Installation
 ```
-pip install torch-dct
 git clone https://github.com/skaws2003/pytorch_mfcc.git
 ```
 
 
 ## Acknowledgements
-* [DCT transformation for PyTorch](https://github.com/zh217/torch-dct) by [Ziyang Hu](https://github.com/zh217/)
+* [DCT for PyTorch](https://github.com/zh217/torch-dct) by [Ziyang Hu](https://github.com/zh217/)
 * This code is based on [python_speech_features](https://github.com/jameslyons/python_speech_features) by [James Lyons](https://github.com/jameslyons)
 
 
