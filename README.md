@@ -1,3 +1,5 @@
+# Now official torchaudio supports MFCC!!! See [Here](https://github.com/pytorch/audio). This Library will no longer be maintained
+
 # MFCC (Mel Frequency Cepstral Coefficient) for PyTorch
 
 Based on [this repository](https://github.com/jameslyons/python_speech_features), this project extends the MFCC function for Pytorch so that backpropagation path could be established through.
