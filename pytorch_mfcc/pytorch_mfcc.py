@@ -108,11 +108,11 @@ class MFCC(torch.nn.Module):
         outs = []
         for i,signal in enumerate(signals):
             feat,energy = self.fbank(signal[:lengths[i]])
-            feat = torch.log(feat)+1e-6
+            feat = torch.log(feat+1e-6)
             feat = dct(feat,norm='ortho')[:,:self.numcep]
             feat = self.lifter(feat)
             if self.appendEnergy:
-                feat[:,0] = torch.log(energy)+1e-6 # replace first cepstral coefficient with log of frame energy
+                feat[:,0] = torch.log(energy+1e-6) # replace first cepstral coefficient with log of frame energy
             outs.append(feat)
         
         # Pad each element of outs list
